@@ -1,9 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Transcriptor de Reuniones</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .transcription-box {
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 800px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+        .confirmation {
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Bienvenido al Transcriptor de Reuniones</h1>
@@ -14,15 +32,17 @@
         <br><br>
         <button type="submit">Subir archivo</button>
     </form>
-    
+
     {% if filename %}
-        <p style="color: green;"><strong>Archivo '{{ filename }}' subido correctamente.</strong></p>
+        <p class="confirmation">Archivo '{{ filename }}' subido correctamente.</p>
     {% endif %}
 
     {% if transcription %}
-        <h2>Transcripción:</h2>
-        <pre>{{ transcription }}</pre>
+        <div class="transcription-box">
+            <h2>Transcripción:</h2>
+            {{ transcription }}
+        </div>
     {% endif %}
-
 </body>
 </html>
+
