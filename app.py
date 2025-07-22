@@ -37,11 +37,11 @@ def index():
             # Transcribe with Whisper
             model = whisper.load_model("base")
             result = model.transcribe(converted_path, language="es")
-
-            return f"<h2>Transcripción:</h2><pre>{result['text']}</pre>"
+            # Clean up the converted file            
+            return render_template('index.html', transcription=result['text'], filename=filename)
 
     return render_template('index.html')
 
 if __name__ == '__main__':
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

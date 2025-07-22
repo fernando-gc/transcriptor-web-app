@@ -14,5 +14,15 @@
         <br><br>
         <button type="submit">Subir archivo</button>
     </form>
+    
+    {% if filename %}
+        <p style="color: green;"><strong>Archivo '{{ filename }}' subido correctamente.</strong></p>
+    {% endif %}
+
+    {% if transcription %}
+        <h2>Transcripción:</h2>
+        <pre>{{ transcription }}</pre>
+    {% endif %}
+
 </body>
 </html>
