@@ -34,7 +34,10 @@
     </form>
 
     {% if filename %}
-        <p class="confirmation">Archivo '{{ filename }}' subido correctamente.</p>
+        <p class="confirmation">Archivo '{{ filename }}' cargado correctamente.</p>
+        <form method="POST" action="{{ url_for('transcribir', filename=filename) }}">
+            <button type="submit">Transcribir archivo</button>
+        </form>
     {% endif %}
 
     {% if transcription %}
