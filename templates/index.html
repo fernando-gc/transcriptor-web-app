@@ -1,15 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Transcriptor de Reuniones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Sube tu grabación</h1>
+    <h1>Bienvenido al Transcriptor de Reuniones</h1>
+    <p>Sube tu archivo de audio para obtener la transcripción y la identificación de los hablantes.</p>
+
     <form method="POST" enctype="multipart/form-data">
         <input type="file" name="audiofile" accept=".wav,.mp3,.m4a" required>
-        <button type="submit">Subir</button>
+        <br><br>
+        <button type="submit">Subir archivo</button>
     </form>
 </body>
 </html>

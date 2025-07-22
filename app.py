@@ -1,7 +1,8 @@
-
 from flask import Flask, request, render_template, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
+import whisper
+import subprocess
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'm4a'}
@@ -24,9 +25,23 @@ def index():
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
-            return f'Archivo {filename} subido correctamente.'
+
+            # Convert to WAV mono 16kHz
+            converted_path = os.path.splitext(filepath)[0] + "_converted.wav"
+            subprocess.run([
+                "ffmpeg", "-i", filepath,
+                "-ac", "1", "-ar", "16000",
+                converted_path
+            ])
+
+            # Transcribe with Whisper
+            model = whisper.load_model("base")
+            result = model.transcribe(converted_path, language="es")
+
+            return f"<h2>Transcripción:</h2><pre>{result['text']}</pre>"
+
     return render_template('index.html')
 
 if __name__ == '__main__':
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
